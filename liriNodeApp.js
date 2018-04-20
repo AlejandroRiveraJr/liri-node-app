@@ -1,18 +1,45 @@
 require("dotenv").config();
-// key module
-var keys = require('./keys.js');
+
 //require npm packages
-var Twitter = require('twitter');
-var Spotify = require('spotify');
-var request = require('request');
-var fs = require('fs');
+const keys = require("./keys.js")
+const request = require('request')
+const Twitter = require('twitter')
+const client = new Twitter(keys.twitter)
+const Spotify = require('node-spotify-api')
+const fs = require('fs')
 
-var client = new twitter(keys.twitter);
+// input from the console
+let input = process.argv
+let action = input[2]
+let inputs = input[3]
 
-console.log(keys.twitter);
+// switch case for the different functions
+switch (action) {
 
-function twitter() {
-    var params = { screen_name: 'rabbithole', count: 20 };
+    case "my-tweets":
+        twitter(inputs)
+        break
+
+    case "spotify-this-song":
+        spotifySong(inputs)
+        break
+
+    case "movie-this":
+        movie(inputs)
+        break
+
+    case "do-what-it-says":
+        doit()
+        break
+
+    
+        
+};
+
+// console.log(keys.twitter);
+
+function twitter(inputs) {
+    var params = { screen_name: inputs, count: 20 };
     client.get('statuses/user_timeline', params, function (error, tweets, response) {
         if (!error) {
 
