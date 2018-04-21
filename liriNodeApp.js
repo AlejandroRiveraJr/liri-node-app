@@ -32,8 +32,8 @@ switch (action) {
         doit()
         break
 
-    
-        
+
+
 };
 
 // console.log(keys.twitter);
@@ -52,3 +52,25 @@ function twitter(inputs) {
         }
     });
 };
+
+// Pulls Spotify song information based on song title
+function spotifySong(inputs) {
+    var spotify = new Spotify(keys.spotify);
+    
+    if (!inputs) {
+        inputs = "I Want it That Way";
+    }
+    
+    spotify.search({ type: 'track', query: inputs}, function (error, data) {
+        if (error) {
+            console.log("An error has occured: " + error);
+        } else {
+            console.log("----------------------------------------------------------------");
+            console.log("Artist: " + data.tracks.items[0].artists[0].name);
+            console.log("Song Name: " + data.tracks.items[0].name);
+            console.log("Spotify Link: " + data.tracks.items[0].external_urls.spotify);
+            console.log("Album Name: " + data.tracks.items[0].album.name);
+            console.log("----------------------------------------------------------------");
+        }
+    });
+}
